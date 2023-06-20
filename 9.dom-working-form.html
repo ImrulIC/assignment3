@@ -1,0 +1,153 @@
+<!-- 9.JS DOM Working with Form Input:
+Implement a webpage with a form that has the following fields:
+a. Name (text input)
+b. Email (email input)
+c. Password (password input)
+d. Confirm Password (password input)
+e. Submit (button)
+
+
+Implement JavaScript validation for the form fields:
+f. Name should not be empty and should contain only letters.
+g. Email should be a valid email address.
+h. Password should have a minimum length of 8 characters and contain at least one uppercase letter, one lowercase letter, and one digit.
+i. Confirm Password should match the Password field.
+j. Display appropriate error messages for invalid fields. -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Form Validation Example</title>
+    <style>
+      .error {
+        color: red;
+      }
+    </style>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>Form Validation Example</h1>
+    <form id="myForm">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" />
+        <span id="nameError" class="error"></span>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+        <span id="emailError" class="error"></span>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+        <span id="passwordError" class="error"></span>
+      </div>
+      <div>
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" />
+        <span id="confirmPasswordError" class="error"></span>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      // Form submit event handler
+      document
+        .getElementById("myForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent form submission
+
+          // Clear previous error messages
+          clearErrors();
+
+          // Validate form fields
+          const nameInput = document.getElementById("name");
+          const emailInput = document.getElementById("email");
+          const passwordInput = document.getElementById("password");
+          const confirmPasswordInput =
+            document.getElementById("confirmPassword");
+
+          let isValid = true;
+
+          if (!validateName(nameInput.value)) {
+            displayError(
+              "nameError",
+              "Name should not be empty and should contain only letters."
+            );
+            isValid = false;
+          }
+
+          if (!validateEmail(emailInput.value)) {
+            displayError(
+              "emailError",
+              "Email should be a valid email address."
+            );
+            isValid = false;
+          }
+
+          if (!validatePassword(passwordInput.value)) {
+            displayError(
+              "passwordError",
+              "Password should have a minimum length of 8 characters and contain at least one uppercase letter, one lowercase letter, and one digit."
+            );
+            isValid = false;
+          }
+
+          if (
+            !validateConfirmPassword(
+              passwordInput.value,
+              confirmPasswordInput.value
+            )
+          ) {
+            displayError(
+              "confirmPasswordError",
+              "Confirm Password should match the Password field."
+            );
+            isValid = false;
+          }
+
+          if (isValid) {
+            alert("Form submitted successfully!");
+            // Add code to process the form submission here
+          }
+        });
+
+      // Clear error messages
+      function clearErrors() {
+        const errorElements = document.getElementsByClassName("error");
+        for (let i = 0; i < errorElements.length; i++) {
+          errorElements[i].textContent = "";
+        }
+      }
+
+      // Display error message for a specific field
+      function displayError(elementId, errorMessage) {
+        const errorElement = document.getElementById(elementId);
+        errorElement.textContent = errorMessage;
+      }
+
+      // Validate name
+      function validateName(name) {
+        return /^[A-Za-z]+$/.test(name);
+      }
+
+      // Validate email
+      function validateEmail(email) {
+        // Simple email validation regex
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      // Validate password
+      function validatePassword(password) {
+        // At least 8 characters, one uppercase, one lowercase, one digit
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
+      }
+
+      // Validate confirm password
+      function validateConfirmPassword(password, confirmPassword) {
+        return password === confirmPassword;
+      }
+    </script>
+  </body>
+</html>

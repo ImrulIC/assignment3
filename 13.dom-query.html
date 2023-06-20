@@ -1,0 +1,30 @@
+<!-- 13.DOM Query Selector:
+a. Create a webpage with multiple paragraphs containing different classes and IDs.
+
+b. Implement a JavaScript function that selects all paragraphs with a specific class and changes their text color to red -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Query Selector Example</title>
+    <style>
+      .highlight {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Query Selector Example</h1>
+    <p class="highlight" id="paragraph1">This is paragraph 1.</p>
+    <p class="highlight" id="paragraph2">This is paragraph 2.</p>
+    <p id="paragraph3">This is paragraph 3.</p>
+    <p class="highlight" id="paragraph4">This is paragraph 4.</p>
+    <script>
+      const paragraphs = document.querySelectorAll(".highlight");
+
+      paragraphs.forEach(function (paragraph) {
+        paragraph.style.color = "red";
+      });
+    </script>
+  </body>
+</html>
